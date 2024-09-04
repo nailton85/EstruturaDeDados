@@ -226,4 +226,3 @@ public class Deque<Item> implements Iterable<Item> {
         StdOut.println();
     }
 }
-// end of class
