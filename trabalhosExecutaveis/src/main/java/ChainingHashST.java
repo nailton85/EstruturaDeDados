@@ -2,7 +2,7 @@
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.StreamTokenizer;
+import java.util.StringTokenizer;
 import java.util.NoSuchElementException;
 
 
@@ -26,16 +26,16 @@ public class ChainingHashST<Key, Value>{
 	*/
 	public ChainingHashST(int m){
 		this.m = m;
-		st = (DequeSearch<Key, Values>[]) new DequeSearch[m];
+		st = (DequeSearch<Key, Value>[]) new DequeSearch[m];
 		for (int i = 0; i < m; i++)
-			st[i] = new DequeSearch<Key, Values>();
+			st[i] = new DequeSearch<Key, Value>();
 	}
 	//resize the hash table to have the given number of chains,
 	//rehashing all of the keys
 	private void resize (int chains){
 		ChainingHashST<Key, Value> temp = new ChainingHashST<Key, Value>(chains);
 		for(int i = 0; i < m; i++){
-			for(Key key : st[i],keys()){
+			for(Key key : st[i].keys()){
 				temp.put(key, st[i].get(key));
 			}
 		}
@@ -58,11 +58,9 @@ public class ChainingHashST<Key, Value>{
 		ftmp = ftmp - itmp;
 		itmp = (int) (ftmp * m);
 		return itmp;
-		/*
-		int h = (Math.abs(key.hashCode());
-		h ^= (h >>> 20) ^ (h >>> 12) ^ (h >>> 7) ^ (h >>> 4);
-		return h & (m - 1);
-		*/
+//		int h = (Math.abs(key.hashCode()));
+//		h ^= (h >>> 20) ^ (h >>> 12) ^ (h >>> 7) ^ (h >>> 4);
+//		return h & (m - 1);
 	}
 	
 	/**
@@ -81,7 +79,12 @@ public class ChainingHashST<Key, Value>{
 	*		 {@code false} othewise
 	*/
 	public boolean isEmpty(){
-		return size() == 0;
+		if(size() == 0){
+			return  true;
+		}else{
+			return false;
+		}
+//		return size() == 0;
 	}
 	
 	/**
@@ -142,7 +145,7 @@ public class ChainingHashST<Key, Value>{
 	}
 	
 	//return key in symbol table as an Interable
-	public Interable<Key> keys(){
+	public Iterable<Key> keys(){
 		Deque<Key> queue = new Deque<Key>();
 		for(int i = 0; i < m; i++){
 			for(Key key : st[i].keys())
@@ -170,15 +173,15 @@ public class ChainingHashST<Key, Value>{
 		 Cidade city;
 		 
 		 try{
-			 FileReader in1 new FileReader (args[0]);
-			 BufferedReader br = new BufferReader(in1);
+			 FileReader in1 = new FileReader (args[0]);
+			 BufferedReader br = new BufferedReader(in1);
 			 n = Integer.parseInt(br.readLine());
 			 
 			 for(int j = 0; j < n; j++){
 				 tmp = br.readLine();
-				 st = new StreamTokenizer(tmp);
+				 st = new StringTokenizer(tmp);
 				 
-				 city = new Cidade(st.nextToken(), Interger.parseInt(st.nextToken()));
+				 city = new Cidade(st.nextToken(), Integer.parseInt(st.nextToken()));
 				 tabelahash.put(city.get_nome(),  city);
 			 }
 			 br.close();
