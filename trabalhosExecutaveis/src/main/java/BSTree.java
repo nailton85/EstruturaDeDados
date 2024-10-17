@@ -3,17 +3,19 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
+//import Cidade;
 
-public class BSTree {
+public class BSTree<Key extends Comparable<Key>, Value> {
     private Node root;
 
-    private class Node{
+    private class Node {
         private Key key;
         private Value val;
         private Node left;
         private Node right;
+        private Node father;
 
-        public Node(Key key, Value val){
+        public Node(Key key, Value val) {
             this.key = key;
             this.val = val;
         }
@@ -49,14 +51,18 @@ public class BSTree {
         preorder(x.left);
         preorder(x.right);
     }
-    public void posorder(Node x){
-        if(x == null)return;
-        preorder(x.left);
-        preorder(x.right);
-        System.out.println(x.key+" "+x.val);
+    public void posorder(Node x) {
+        if (x == null) return;
+        posorder(x.left);
+        posorder(x.right);
+        System.out.println(x.key + " " + x.val);
     }
+    public BSTree() {
+        // Construtor sem argumentos
+    }
+
     public BSTree(Node root){
-//        this.root = root;
+        //        this.root = root;
     }
 
     public boolean contains(Key key){
@@ -147,7 +153,7 @@ public class BSTree {
             }
         }
     }
-    public key min(){
+    public Key min(){
         if(isEmpty())throw new NoSuchElementException("called min() with empty symbol table");
         return min(root).key;
     }
@@ -175,19 +181,19 @@ public class BSTree {
         String tmp;
         StringTokenizer st;
 
-        Bstre<String, Cidade> mytree = new BSTree<String, Cidade>();
+        BSTree<String, Cidade> mytree = new BSTree<String, Cidade>();
         Cidade city;
 
         try {
             FileReader in1 = new FileReader (args[0]);
             BufferedReader br = new BufferedReader(in1);
-            n = Interger.parseInt(br.readLine());
+            n = Integer.parseInt(br.readLine());
 
             for(int j=0; j < n; j++){
                 tmp = br.readLine();
                 st = new StringTokenizer(tmp);
 
-                city = new Cidade(st.nextToken(), Interger.parseInt(st.nextToken()));
+                city = new Cidade(st.nextToken(), Integer.parseInt(st.nextToken()));
                 mytree.put(city.get_nome(),city);
             }
             br.close();
@@ -196,7 +202,7 @@ public class BSTree {
             in1 = new FileReader (args[1]);
             br = new BufferedReader(in1);
 
-            n = Interger.parseInt(br.readLine());
+            n = Integer.parseInt(br.readLine());
 
             for(int j=0; j < n; j++){
                 tmp = br.readLine();
@@ -208,7 +214,7 @@ public class BSTree {
                 city = mytree.get(tmp);
                 if(city == null) System.out.print("\n[Failed]"+tmp+"não foi encontrada.");
                 else{
-                    System.out.println("\n[Ok]\t "+city.get_nome()+"foi encontrada. Temperatura lá é "+city.get_tempo()+" F");
+                    System.out.println("\n[Ok]\t "+city.get_nome()+" foi encontrada. Temperatura lá é "+city.get_temp()+" F");
                 }
             }
             br.close();
